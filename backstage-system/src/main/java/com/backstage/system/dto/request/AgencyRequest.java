@@ -19,11 +19,11 @@ public class AgencyRequest implements Serializable {
      */
     private String code;
 
-
     /**
-     * 机场代码
+     * 当前用户组织机构代码
      */
-    private String dm;
+    private String currentCode;
+
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class AgencyRequest implements Serializable {
         this.code = code;
     }
 
-    public String getDm() {
-        return dm;
+    public String getCurrentCode() {
+        return currentCode;
     }
 
-    public void setDm(String dm) {
-        this.dm = dm;
+    public void setCurrentCode(String currentCode) {
+        this.currentCode = currentCode;
     }
 }

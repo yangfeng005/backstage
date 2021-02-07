@@ -91,4 +91,10 @@ public interface IUserService extends IBaseAOService<UserAO, UserCriteria> {
     ServiceResult<UserAO> getUserById(String id);
 
 
+    /**
+     * 重置密码
+     *
+     * @return
+     */
+    ServiceResult<Integer> resetPwd(String userName);
 }

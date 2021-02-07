@@ -59,7 +59,7 @@ public class AgencyService extends AbstractBaseAOService<AgencyAO, AgencyCriteri
                 && StringUtils.isEmpty(request.getCode())) {
             return TreeUtil.sortTreeNodes(allAgencyList, "");
         }
-        request.setDm(user.getAgencyCode());
+        request.setCurrentCode(user.getAgencyCode());
         List<AgencyAO> agencyChildren = agencyCustomizedMapper.list(request);
         List<AgencyAO> parentList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(agencyChildren)) {

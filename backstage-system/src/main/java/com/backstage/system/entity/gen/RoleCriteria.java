@@ -563,6 +563,66 @@ public class RoleCriteria implements Serializable {
             return (Criteria) this;
         }
 
+        public Criteria andDataScopeIsNull() {
+            addCriterion("data_scope is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeIsNotNull() {
+            addCriterion("data_scope is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeEqualTo(Integer value) {
+            addCriterion("data_scope =", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeNotEqualTo(Integer value) {
+            addCriterion("data_scope <>", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeGreaterThan(Integer value) {
+            addCriterion("data_scope >", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeGreaterThanOrEqualTo(Integer value) {
+            addCriterion("data_scope >=", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeLessThan(Integer value) {
+            addCriterion("data_scope <", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeLessThanOrEqualTo(Integer value) {
+            addCriterion("data_scope <=", value, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeIn(List<Integer> values) {
+            addCriterion("data_scope in", values, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeNotIn(List<Integer> values) {
+            addCriterion("data_scope not in", values, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeBetween(Integer value1, Integer value2) {
+            addCriterion("data_scope between", value1, value2, "dataScope");
+            return (Criteria) this;
+        }
+
+        public Criteria andDataScopeNotBetween(Integer value1, Integer value2) {
+            addCriterion("data_scope not between", value1, value2, "dataScope");
+            return (Criteria) this;
+        }
+
         public Criteria andDescriptionIsNull() {
             addCriterion("description is null");
             return (Criteria) this;

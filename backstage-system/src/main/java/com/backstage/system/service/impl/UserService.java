@@ -1,26 +1,26 @@
 package com.backstage.system.service.impl;
 
+import com.backstage.common.page.Page;
+import com.backstage.common.utils.codec.MD5Util;
+import com.backstage.common.utils.codec.SaltUtil;
+import com.backstage.common.utils.lang.DateTimeUtil;
+import com.backstage.core.constant.Constant;
+import com.backstage.core.mapper.BaseGeneratedMapper;
+import com.backstage.core.result.ServiceResult;
+import com.backstage.core.result.ServiceResultHelper;
+import com.backstage.core.service.AbstractBaseAOService;
 import com.backstage.system.auth.AuthUtil;
 import com.backstage.system.dao.customized.UserCustomizedMapper;
 import com.backstage.system.dao.gen.UserGeneratedMapper;
 import com.backstage.system.dao.gen.UserRoleGeneratedMapper;
 import com.backstage.system.dto.request.UserRequest;
 import com.backstage.system.entity.customized.UserAO;
+import com.backstage.system.entity.customized.UserRoleAO;
 import com.backstage.system.entity.gen.UserCriteria;
+import com.backstage.system.service.IUserRoleService;
 import com.backstage.system.service.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.backstage.core.constant.Constant;
-import com.backstage.common.page.Page;
-import com.backstage.common.utils.codec.MD5Util;
-import com.backstage.common.utils.codec.SaltUtil;
-import com.backstage.common.utils.lang.DateTimeUtil;
-import com.backstage.core.mapper.BaseGeneratedMapper;
-import com.backstage.core.result.ServiceResult;
-import com.backstage.core.result.ServiceResultHelper;
-import com.backstage.core.service.AbstractBaseAOService;
-import com.backstage.system.entity.customized.UserRoleAO;
-import com.backstage.system.service.IUserRoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -240,6 +240,17 @@ public class UserService extends AbstractBaseAOService<UserAO, UserCriteria> imp
                 return ServiceResultHelper.genResultWithFaild("原密码不正确", -1);
             }
         }
+        return updatePwd(userName, newPassword);
+    }
+
+    /**
+     * 更新密码
+     *
+     * @param userName
+     * @param newPassword
+     * @return
+     */
+    public ServiceResult<Integer> updatePwd(String userName, String newPassword) {
         UserCriteria criteria = new UserCriteria();
         criteria.createCriteria().andUserNameEqualTo(userName);
         UserAO user = new UserAO();
@@ -264,4 +275,13 @@ public class UserService extends AbstractBaseAOService<UserAO, UserCriteria> imp
         return userRet;
     }
 
+    /**
+     * 重置密码
+     *
+     * @return
+     */
+    @Override
+    public ServiceResult<Integer> resetPwd(String userName) {
+        return updatePwd(userName, Constant.USER_CS_PWD);
+    }
 }

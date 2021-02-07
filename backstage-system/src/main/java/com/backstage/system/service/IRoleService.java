@@ -1,5 +1,6 @@
 package com.backstage.system.service;
 
+
 import com.backstage.core.result.ServiceResult;
 import com.backstage.core.service.IBaseAOService;
 import com.backstage.system.dto.request.RoleRequest;
@@ -27,9 +28,15 @@ public interface IRoleService extends IBaseAOService<RoleAO, RoleCriteria> {
     ServiceResult<List<RoleAO>> getRolesByUserName(String userName);
 
     /**
-     * 查询所有角色
+     * 分页查询角色
      */
-    ServiceResult<List<RoleAO>> listRoles(RoleRequest request);
+    ServiceResult<List<RoleAO>> list(RoleRequest request);
+
+
+    /**
+     * 不分页查询角色
+     */
+    ServiceResult<List<RoleAO>> listNoPage(RoleRequest request);
 
     /**
      * 保存角色
@@ -56,5 +63,22 @@ public interface IRoleService extends IBaseAOService<RoleAO, RoleCriteria> {
      * @return
      */
     ServiceResult<Boolean> deleteRole(String roleId);
+
+    /**
+     * 获取数据权限配置
+     *
+     * @param userName
+     * @return
+     */
+    Integer getDataScopeByUserName(String userName);
+
+
+    /**
+     * 根据用户id查询角色id集合
+     *
+     * @param userId
+     * @return
+     */
+    ServiceResult<List<String>> getRoleIdsByUserId(String userId);
 
 }

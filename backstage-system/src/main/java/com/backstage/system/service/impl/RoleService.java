@@ -1,7 +1,9 @@
 package com.backstage.system.service.impl;
 
-import com.backstage.core.constant.Constant;
+
+import com.backstage.common.page.Page;
 import com.backstage.common.utils.lang.DateTimeUtil;
+import com.backstage.core.constant.Constant;
 import com.backstage.core.mapper.BaseGeneratedMapper;
 import com.backstage.core.result.ServiceResult;
 import com.backstage.core.result.ServiceResultHelper;
@@ -11,16 +13,20 @@ import com.backstage.system.dao.customized.RoleCustomizedMapper;
 import com.backstage.system.dao.gen.RoleGeneratedMapper;
 import com.backstage.system.dto.request.RoleRequest;
 import com.backstage.system.entity.customized.RoleAO;
-import com.backstage.system.entity.gen.RoleCriteria;
 import com.backstage.system.entity.customized.RolePrivilegeAO;
+import com.backstage.system.entity.gen.RoleCriteria;
 import com.backstage.system.service.IRolePrivilegeService;
 import com.backstage.system.service.IRoleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -64,13 +70,27 @@ public class RoleService extends AbstractBaseAOService<RoleAO, RoleCriteria> imp
     }
 
     /**
-     * 查询所有角色
+     * 查询角色
      *
      * @return
      */
     @Override
-    public ServiceResult<List<RoleAO>> listRoles(RoleRequest request) {
+    public ServiceResult<List<RoleAO>> list(RoleRequest request) {
         request.setAgencyCode(AuthUtil.getCurrentUser().getAgencyCode());
+        ServiceResult<List<RoleAO>> ret = new ServiceResult<>();
+        PageHelper.startPage(request.getPageNo(), request.getPageSize());
+        List<RoleAO> roleList = roleCustomizedMapper.listByCondition(request);
+        ret.setData(roleList);
+        ret.setSucceed(true);
+        ret.setAdditionalProperties("page", Page.obtainPage(new PageInfo<>(roleList)));
+        return ret;
+    }
+
+    /**
+     * 不分页查询角色
+     */
+    @Override
+    public ServiceResult<List<RoleAO>> listNoPage(RoleRequest request) {
         return ServiceResultHelper.genResultWithSuccess(roleCustomizedMapper.listByCondition(request));
     }
 
@@ -153,5 +173,47 @@ public class RoleService extends AbstractBaseAOService<RoleAO, RoleCriteria> imp
     @Override
     public ServiceResult<Boolean> deleteRole(String roleId) {
         return deleteById(roleId);
+    }
+
+
+    /**
+     * 获取数据权限配置
+     *
+     * @param userName
+     * @return
+     */
+    @Override
+    public Integer getDataScopeByUserName(String userName) {
+        Integer dataScope = null;
+        //获取角色
+        ServiceResult<List<RoleAO>> rolesResult = getRolesByUserName(userName);
+        if (rolesResult != null && rolesResult.isSucceed() && !CollectionUtils.isEmpty(rolesResult.getData())) {
+            List<Integer> dataScopes = new ArrayList<>();
+            for (RoleAO role : rolesResult.getData()) {
+                if (role.getDataScope() != null) {
+                    dataScopes.add(role.getDataScope());
+                }
+            }
+            if (!CollectionUtils.isEmpty(dataScopes)) {
+                dataScope = Collections.max(dataScopes);
+            }
+        }
+        return dataScope;
+    }
+
+    /**
+     * 根据用户id查询角色id集合
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public ServiceResult<List<String>> getRoleIdsByUserId(String userId) {
+        List<RoleAO> roleList = getRolesByUserId(AuthUtil.getCurrentUser().getId()).getData();
+        List<String> roleIds = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(roleList)) {
+            roleList.stream().forEach(o -> roleIds.add(o.getId()));
+        }
+        return ServiceResultHelper.genResultWithSuccess(roleIds);
     }
 }

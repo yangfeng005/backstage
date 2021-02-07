@@ -2,10 +2,14 @@ package com.backstage.system.controller;
 
 import com.backstage.system.log.LogOperation;
 import com.backstage.system.service.IResourceService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +21,7 @@ import javax.annotation.Resource;
  * @author yangfeng
  * @date 2019-09-11 16:02
  */
+@Api(tags = "资源管理")
 @RestController
 @RequestMapping(value = "resource")
 public class ResourceController {
@@ -31,7 +36,9 @@ public class ResourceController {
      *
      * @return
      */
-    @RequestMapping(value = "/getResourceTreeNode", method = {RequestMethod.GET, RequestMethod.POST})
+    @ApiOperation(value = "获取资源树结构", notes = "获取资源树结构")
+    @ApiImplicitParams({})
+    @GetMapping("/getResourceTreeNode")
     @LogOperation(action = "获取资源树结构")
     public Object getResourceTreeNode() {
         return resourceService.getResourceTreeNode();
@@ -39,12 +46,16 @@ public class ResourceController {
 
 
     /**
-     * 获取资源.
+     * 根据用户名获取资源.
      *
      * @return
      */
-    @RequestMapping(value = "/getResource", method = {RequestMethod.GET, RequestMethod.POST})
-    @LogOperation(action = "获取资源")
+    @ApiOperation(value = "根据用户名获取资源", notes = "根据用户名获取资源")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", required = true),
+    })
+    @GetMapping("/getResource")
+    @LogOperation(action = "根据用户名获取资源")
     public Object getResource(@RequestParam String userName) {
         return resourceService.getResource(userName);
     }
