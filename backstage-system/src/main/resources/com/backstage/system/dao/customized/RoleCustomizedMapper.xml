@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.backstage.system.dao.customized.RoleCustomizedMapper" >
+  <resultMap id="CustomResultMap" type="com.backstage.system.entity.customized.RoleAO" >
+      <id column="id" property="id" jdbcType="VARCHAR" />
+      <result column="agency_code" property="agencyCode" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="code" property="code" jdbcType="VARCHAR" />
+      <result column="rank" property="rank" jdbcType="VARCHAR" />
+      <result column="description" property="description" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="INTEGER" />
+      <result column="creater" property="creater" jdbcType="VARCHAR" />
+      <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+      <result column="updater" property="updater" jdbcType="VARCHAR" />
+      <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+      <result column="agency_name" property="agencyName" jdbcType="VARCHAR"/>
+  </resultMap>
+
+    <select id="listByCondition"  resultMap="CustomResultMap">
+        SELECT
+            r.*,
+            a.`name` as agency_name
+        FROM
+            t_sys_role r
+        LEFT JOIN t_agency a
+                  ON r.agency_code = a.code and a.`status` = 1
+        <where>
+             <if test="agencyCode != null and agencyCode != ''">
+                 r.agency_code = #{agencyCode, jdbcType=VARCHAR}
+            </if>
+            <choose >
+                <when test="status != null and status != '' " >
+                    AND r.status = #{status,jdbcType=INTEGER}
+                </when>
+                <otherwise>
+                    AND r.status &lt;&gt; 0
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+  <select id="getRolesByUserId"  resultMap="CustomResultMap" >
+    SELECT
+        r.*
+    FROM
+        t_sys_role r,
+        t_sys_user_role ur
+    WHERE
+        r.id = ur.role_id
+        AND ur.user_id = #{userId} and r.status=1
+  </select>
+
+  <select id="getRolesByUserName"  resultMap="CustomResultMap" >
+    SELECT
+        r.*
+    FROM
+        t_sys_role r,
+        t_sys_user_role ur,
+        t_sys_user u
+    WHERE
+        r.id = ur.role_id
+        AND ur.user_id = u.id
+        AND u.user_name = #{userName,jdbcType=VARCHAR}
+        AND u.status = 1
+  </select>
+</mapper>

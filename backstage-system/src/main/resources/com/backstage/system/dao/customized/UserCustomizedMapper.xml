@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Description: A generated data access implementation of entity User.
+                 Generated at 2018-06-14 20:05:30, do NOT modify!
+    Author: <a href="mailto:DL88250@gmail.com">Liang Ding</a>
+    Version: 1.0.0.0, Jun 14, 2018
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.backstage.system.dao.customized.UserCustomizedMapper">
+    <resultMap id="CustomResultMap" type="com.backstage.system.entity.customized.UserAO">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+        <result column="true_name" property="trueName" jdbcType="VARCHAR" />
+        <result column="salt" property="salt" jdbcType="VARCHAR" />
+        <result column="gender" property="gender" jdbcType="INTEGER" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="country" property="country" jdbcType="VARCHAR" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="city" property="city" jdbcType="VARCHAR" />
+        <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+        <result column="language" property="language" jdbcType="VARCHAR" />
+        <result column="agency_code" property="agencyCode" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+        <result column="last_login_time" property="lastLoginTime" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+        <result column="creater" property="creater" jdbcType="VARCHAR" />
+        <result column="updater" property="updater" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="agency_name" property="agencyName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getUsersByRoleId" resultMap="CustomResultMap">
+    SELECT
+        u.*
+    FROM
+        t_sys_user u,
+        t_sys_role r,
+        t_sys_user_role ur
+    WHERE
+        r.id = ur.role_id
+        AND u.id = ur.user_id
+        AND u.status &lt;&gt; 0
+        AND ur.role_id = #{roleId}
+  </select>
+
+    <select id="listByCondition" resultMap="CustomResultMap">
+        SELECT
+            u.*,
+            a.`name` as agency_name
+        FROM
+            t_sys_user u
+        LEFT JOIN t_agency a
+            ON u.agency_code = a.code and a.`status` = 1
+       <where>
+            u.user_name &lt;&gt; #{systemSuperAdmin, jdbcType=VARCHAR}
+            <if test="agencyCode != null and agencyCode != ''">
+                and u.agency_code = #{agencyCode, jdbcType=VARCHAR}
+            </if>
+            <if test="currentUserName != null and currentUserName != ''">
+                AND u.user_name &lt;&gt; #{currentUserName, jdbcType=VARCHAR}
+            </if>
+            <choose>
+                <when test="status != null and status != '' ">
+                    AND u.status = #{status,jdbcType=INTEGER}
+                </when>
+                <otherwise>
+                    AND u.status &lt;&gt; 0
+                </otherwise>
+            </choose>
+            <if test="userName != null and userName != ''">
+                AND u.user_name LIKE CONCAT('%', #{userName, jdbcType=VARCHAR},'%')
+            </if>
+            <if test="trueName != null and trueName != ''">
+                AND u.true_name LIKE CONCAT('%', #{trueName, jdbcType=VARCHAR},'%')
+            </if>
+       </where>
+    </select>
+
+    <select id="getUserByName" resultMap="CustomResultMap">
+        SELECT
+            u.*,
+            a.`name` as agency_name
+        FROM
+            t_sys_user u
+        LEFT JOIN t_agency a ON u.agency_code = a.code and a.`status` = 1
+        WHERE
+            u.`status` &lt;&gt; 0
+            AND u.user_name = #{userName, jdbcType=VARCHAR}
+    </select>
+</mapper>

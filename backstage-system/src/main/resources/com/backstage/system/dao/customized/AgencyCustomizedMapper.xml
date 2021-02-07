@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Description: A generated data access implementation of entity Agency.
+                 Generated at 2019-11-11 09:09:51, do NOT modify!
+    Author: <a href="mailto:DL88250@gmail.com">Liang Ding</a>
+    Version: 1.0.0.0, Nov 11, 2019
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.backstage.system.dao.customized.AgencyCustomizedMapper" >
+  <resultMap id="CustomResultMap" type="com.backstage.system.entity.customized.AgencyAO" >
+      <id column="id" property="id" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="code" property="code" jdbcType="VARCHAR" />
+      <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+      <result column="leaf" property="leaf" jdbcType="VARCHAR" />
+      <result column="level" property="level" jdbcType="VARCHAR" />
+      <result column="email" property="email" jdbcType="VARCHAR" />
+      <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+      <result column="phone" property="phone" jdbcType="VARCHAR" />
+      <result column="address" property="address" jdbcType="VARCHAR" />
+      <result column="rank" property="rank" jdbcType="VARCHAR" />
+      <result column="description" property="description" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="VARCHAR" />
+      <result column="creater" property="creater" jdbcType="VARCHAR" />
+      <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+      <result column="updater" property="updater" jdbcType="VARCHAR" />
+      <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+      <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="list"  resultMap="CustomResultMap"
+          parameterType="com.backstage.system.dto.request.AgencyRequest">
+      SELECT
+          a1.*,
+          a2. NAME as parent_name
+      FROM
+          `t_agency` a1
+      LEFT JOIN t_agency a2 ON a1.parent_code = a2. CODE
+      <where>
+          <if test="name != null and name != ''">
+            AND a1.name LIKE CONCAT('%', #{name, jdbcType=VARCHAR},'%')
+          </if>
+          <if test="code != null and code != ''">
+            AND a1.code LIKE CONCAT('%', #{code, jdbcType=VARCHAR},'%')
+          </if>
+          <if test="dm != null and dm != ''">
+            AND a1.code = #{dm, jdbcType=VARCHAR}
+          </if>
+      </where>
+  </select>
+
+  <select id="listOthers"  resultMap="CustomResultMap">
+        SELECT
+            *
+        FROM
+           `t_agency`
+        WHERE
+          `status`= 1
+           and id &lt;&gt; #{id, jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteBatch" parameterType="java.util.List">
+      DELETE FROM
+              t_agency
+      WHERE id IN
+      <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >
+          #{item.id,jdbcType=VARCHAR}
+      </foreach>
+  </delete>
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2016-2014, CloudSub technology Co., Ltd.
+
+    All rights reserved.
+
+-->
+
+<!--
+    Description:  MyBatis mysql generated configuration。
+    Version: 1.0.0, Nov 21, 2016
+    Author:
+-->
+
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <plugin type="com.jp.maven.plugin.mybatis.RenameExampleClassPlugin">
+            <property name="searchString" value="Example$"/>
+            <property name="replaceString" value="Criteria"/>
+        </plugin>
+        <plugin type="com.jp.maven.plugin.mybatis.SerializablePlugin"/>
+        <!-- <plugin type="com.jp.maven.plugin.mybatis.MySQLPaginationPlugin"></plugin>-->
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="false"/>
+        </commentGenerator>
+
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/datafusion?useUnicode=true"
+                        userId="root" password="`1qazx">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.yntravelsky.datafusion.entity.gen" targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.yntravelsky.datafusion.dao.gen.mysql" targetProject="src/main/resources/">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.yntravelsky.datafusion.dao.gen"
+                             targetProject="src/main/java/">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="t_supplement_ldp" domainObjectName="SupplementLdp">
+            <generatedKey column="ID" sqlStatement="select uuid_short()" identity="false" />
+            <columnOverride column="ID" property="id" javaType="String" />
+        </table>
+
+        <!-- <table tableName="t_sun_time" domainObjectName="SunTime">
+        </table>-->
+    </context>
+</generatorConfiguration>

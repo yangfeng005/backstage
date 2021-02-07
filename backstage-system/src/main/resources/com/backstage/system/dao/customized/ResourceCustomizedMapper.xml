@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.backstage.system.dao.customized.ResourceCustomizedMapper" >
+  <resultMap id="BaseResultMap" type="com.backstage.system.entity.customized.ResourceAO" >
+      <id column="id" property="id" jdbcType="VARCHAR" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="code" property="code" jdbcType="VARCHAR" />
+      <result column="level" property="level" jdbcType="INTEGER" />
+      <result column="parent_code" property="parentCode" jdbcType="VARCHAR" />
+      <result column="rank" property="rank" jdbcType="INTEGER" />
+      <result column="img" property="img" jdbcType="VARCHAR" />
+      <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="description" property="description" jdbcType="VARCHAR" />
+      <result column="type" property="type" jdbcType="VARCHAR" />
+      <result column="isleaf" property="isleaf" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, code, level, parent_code, rank, img, url, description, type, isleaf
+  </sql>
+  <select id="getParentResourceByLeaf" resultMap="BaseResultMap">
+    select
+         distinct
+         <include refid="Base_Column_List" />
+    from
+          t_sys_resource
+    where
+        code in (
+            SELECT
+                 parent_code
+            FROM t_sys_resource
+            where
+                 parent_code is not null and parent_code &lt;&gt; ''
+          )
+  </select>
+
+  <select id="getResourceWithPrivilege" resultMap="BaseResultMap">
+    SELECT
+          id,name,code,parent_code,rank
+    FROM
+          t_sys_resource
+    UNION all
+    SELECT
+        privilege.id AS id,
+        action.name AS name,
+        concat(resource.code,':',action.code) AS code,
+        resource.code as parent_code,
+        resource.rank
+    FROM
+        t_sys_resource resource
+    LEFT JOIN t_sys_privilege privilege ON privilege.resource_id = resource.id
+    LEFT JOIN t_sys_action  action ON privilege.action_id = action.id
+    WHERE
+          privilege.id is not null
+  </select>
+
+  <select id="getResourceByUserName" resultMap="BaseResultMap">
+    SELECT
+	    *
+    FROM
+        t_sys_resource
+    WHERE
+        id IN (
+            SELECT DISTINCT
+                resource_id
+            FROM
+                `v_user_privilege`
+            WHERE
+                user_name = #{userName, jdbcType=VARCHAR}
+        )
+  </select>
+
+</mapper>
