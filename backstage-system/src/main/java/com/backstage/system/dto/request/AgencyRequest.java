@@ -1,5 +1,7 @@
 package com.backstage.system.dto.request;
 
+import lombok.Data;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * @date 2019/11/14
  * @description 机构请求
  */
+@Data
 public class AgencyRequest implements Serializable {
 
     /**
@@ -24,28 +27,4 @@ public class AgencyRequest implements Serializable {
      */
     private String currentCode;
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCurrentCode() {
-        return currentCode;
-    }
-
-    public void setCurrentCode(String currentCode) {
-        this.currentCode = currentCode;
-    }
 }

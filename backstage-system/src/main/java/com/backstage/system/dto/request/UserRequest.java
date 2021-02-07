@@ -1,6 +1,7 @@
 package com.backstage.system.dto.request;
 
 import com.backstage.core.request.BaseRequest;
+import lombok.Data;
 
 /**
  * 用户请求对象
@@ -8,6 +9,7 @@ import com.backstage.core.request.BaseRequest;
  * @yangfeng
  * @date 2018-06-04 12:57
  */
+@Data
 public class UserRequest extends BaseRequest {
 
     /**
@@ -35,45 +37,4 @@ public class UserRequest extends BaseRequest {
      * 机构code
      */
     private String agencyCode;
-
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getTrueName() {
-        return trueName;
-    }
-
-    public void setTrueName(String trueName) {
-        this.trueName = trueName;
-    }
-
-    public String getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
-
-    public String getAgencyCode() {
-        return agencyCode;
-    }
-
-    public void setAgencyCode(String agencyCode) {
-        this.agencyCode = agencyCode;
-    }
 }

@@ -2,6 +2,7 @@ package com.backstage.system.dto.request;
 
 
 import com.backstage.core.request.BaseRequest;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @date 2019/11/14
  * @description 机构请求
  */
+@Data
 public class RoleRequest extends BaseRequest implements Serializable {
 
     private Integer status;
@@ -33,44 +35,4 @@ public class RoleRequest extends BaseRequest implements Serializable {
      * 机构名称
      */
     private String agencyName;
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getAgencyCode() {
-        return agencyCode;
-    }
-
-    public void setAgencyCode(String agencyCode) {
-        this.agencyCode = agencyCode;
-    }
-
-    public String getAgencyName() {
-        return agencyName;
-    }
-
-    public void setAgencyName(String agencyName) {
-        this.agencyName = agencyName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 }
