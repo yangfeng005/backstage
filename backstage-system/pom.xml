@@ -7,7 +7,7 @@
         <artifactId>backstage</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.universal.backstage.system</groupId>
+    <groupId>com.backstage.system</groupId>
     <artifactId>backstage-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>backstage-system</name>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.universal.core</groupId>
+            <groupId>com.backstage.core</groupId>
             <artifactId>backstage-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
@@ -39,9 +39,9 @@
                 <artifactId>maven-gen-plugin</artifactId>
                 <version>0.1.1</version>
                 <configuration>
-                    <appObjectPackage>com.universal.backstage.system.entity.customized</appObjectPackage>
-                    <entityPackage>com.universal.backstage.system.entity.gen</entityPackage>
-                    <mapperPackage>com.universal.backstage.system.dao.gen.mysql</mapperPackage>
+                    <appObjectPackage>com.backstage.system.entity.customized</appObjectPackage>
+                    <entityPackage>com.backstage.system.entity.gen</entityPackage>
+                    <mapperPackage>com.backstage.system.dao.gen.mysql</mapperPackage>
                 </configuration>
             </plugin>
         </plugins>

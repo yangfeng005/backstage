@@ -7,7 +7,7 @@
         <artifactId>backstage</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.universal.core</groupId>
+    <groupId>com.backstage.core</groupId>
     <artifactId>backstage-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>backstage-core</name>
@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.universal.common</groupId>
+            <groupId>com.backstage.common</groupId>
             <artifactId>backstage-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
