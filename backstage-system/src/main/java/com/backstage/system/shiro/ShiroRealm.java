@@ -12,7 +12,6 @@ import com.backstage.system.entity.customized.VUserPrivilegeAO;
 import com.backstage.system.service.IRoleService;
 import com.backstage.system.service.IUserService;
 import com.backstage.system.service.IVUserPrivilegeService;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -112,14 +111,6 @@ public class ShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("密码不正确!");
         }
     }
-
-    /**
-     * 清除登陆用户授权信息缓存.
-     */
-    public void clearCached() {
-        this.clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
-    }
-
 
     /**
      * 超级管理员
