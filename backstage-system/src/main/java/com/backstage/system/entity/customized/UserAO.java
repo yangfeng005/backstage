@@ -2,8 +2,7 @@ package com.backstage.system.entity.customized;
 
 import com.backstage.core.constant.Constant;
 import com.backstage.system.entity.gen.User;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Data;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -20,6 +19,7 @@ import java.util.List;
  * @version 1.0.0, Jun 14, 2018
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
+@Data
 public final class UserAO extends User implements Serializable {
 
     /**
@@ -42,35 +42,6 @@ public final class UserAO extends User implements Serializable {
      */
     private String agencyName;
 
-
-    public List<RoleAO> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<RoleAO> roles) {
-        this.roles = roles;
-    }
-
-    public List<VUserPrivilegeAO> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(List<VUserPrivilegeAO> privileges) {
-        this.privileges = privileges;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
-
-    public String getAgencyName() {
-        return agencyName;
-    }
-
-    public void setAgencyName(String agencyName) {
-        this.agencyName = agencyName;
-    }
 
     /**
      * 判断是否系统超级管理员

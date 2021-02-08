@@ -1,8 +1,7 @@
 package com.backstage.system.entity.customized;
 
 import com.backstage.system.entity.gen.Agency;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Data;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -18,6 +17,7 @@ import java.io.Serializable;
  * @version 1.0.0, Nov 11, 2019
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
+@Data
 public final class AgencyAO extends Agency implements Serializable {
 
     /**
@@ -29,17 +29,4 @@ public final class AgencyAO extends Agency implements Serializable {
      * 父类名称
      */
     private String parentName;
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
 }

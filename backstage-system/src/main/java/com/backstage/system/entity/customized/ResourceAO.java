@@ -1,8 +1,7 @@
 package com.backstage.system.entity.customized;
 
 import com.backstage.system.entity.gen.Resource;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import lombok.Data;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -19,6 +18,7 @@ import java.util.List;
  * @version 1.0.0, Jun 14, 2018
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
+@Data
 public final class ResourceAO extends Resource implements Serializable {
 
     /**
@@ -30,18 +30,4 @@ public final class ResourceAO extends Resource implements Serializable {
      * 资源权限
      */
     private List<VPrivilegeAO> privileges;
-
-    public List<VPrivilegeAO> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(List<VPrivilegeAO> privileges) {
-        this.privileges = privileges;
-    }
-
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
 }
