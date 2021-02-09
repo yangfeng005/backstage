@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,7 +38,7 @@ public class ResourceController {
      */
     @ApiOperation(value = "获取资源树结构", notes = "获取资源树结构")
     @ApiImplicitParams({})
-    @GetMapping("/getResourceTreeNode")
+    @PostMapping("/getResourceTreeNode")
     @LogOperation(action = "获取资源树结构")
     public Object getResourceTreeNode() {
         return resourceService.getResourceTreeNode();
@@ -54,7 +54,7 @@ public class ResourceController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", required = true),
     })
-    @GetMapping("/getResource")
+    @PostMapping("/getResource")
     @LogOperation(action = "根据用户名获取资源")
     public Object getResource(@RequestParam String userName) {
         return resourceService.getResource(userName);

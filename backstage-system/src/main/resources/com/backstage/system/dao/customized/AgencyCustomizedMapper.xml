@@ -40,13 +40,13 @@
       LEFT JOIN t_agency a2 ON a1.parent_code = a2. CODE
       <where>
           <if test="name != null and name != ''">
-            AND a1.name LIKE CONCAT('%', #{name, jdbcType=VARCHAR},'%')
+              AND a1.name LIKE CONCAT('%', #{name, jdbcType=VARCHAR},'%')
           </if>
           <if test="code != null and code != ''">
-            AND a1.code LIKE CONCAT('%', #{code, jdbcType=VARCHAR},'%')
+              AND a1.code LIKE CONCAT('%', #{code, jdbcType=VARCHAR},'%')
           </if>
-          <if test="dm != null and dm != ''">
-            AND a1.code = #{dm, jdbcType=VARCHAR}
+          <if test="currentCode != null and currentCode != ''">
+              AND a1.code = #{currentCode, jdbcType=VARCHAR}
           </if>
       </where>
   </select>

@@ -2,7 +2,8 @@ package com.backstage.system.entity.customized;
 
 import com.backstage.core.constant.Constant;
 import com.backstage.system.entity.gen.User;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -19,7 +20,6 @@ import java.util.List;
  * @version 1.0.0, Jun 14, 2018
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
-@Data
 public final class UserAO extends User implements Serializable {
 
     /**
@@ -30,18 +30,23 @@ public final class UserAO extends User implements Serializable {
     /**
      * 用户拥有的角色
      */
+    @Getter
+    @Setter
     private List<RoleAO> roles;
 
     /**
      * 用户拥有的权限
      */
+    @Getter
+    @Setter
     private List<VUserPrivilegeAO> privileges;
 
     /**
      * 机构名称
      */
+    @Getter
+    @Setter
     private String agencyName;
-
 
     /**
      * 判断是否系统超级管理员

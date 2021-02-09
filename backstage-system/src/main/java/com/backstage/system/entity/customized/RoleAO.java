@@ -1,7 +1,8 @@
 package com.backstage.system.entity.customized;
 
 import com.backstage.system.entity.gen.Role;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -18,7 +19,6 @@ import java.util.List;
  * @version 1.0.0, Jun 14, 2018
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
-@Data
 public final class RoleAO extends Role implements Serializable {
 
     /**
@@ -29,15 +29,21 @@ public final class RoleAO extends Role implements Serializable {
     /**
      * 角色对应的的人数
      */
+    @Getter
+    @Setter
     private Integer userCount;
 
     /**
      * 角色人员列表
      */
+    @Getter
+    @Setter
     private List<UserAO> users;
 
     /**
      * 机构名称
      */
+    @Getter
+    @Setter
     private String agencyName;
 }

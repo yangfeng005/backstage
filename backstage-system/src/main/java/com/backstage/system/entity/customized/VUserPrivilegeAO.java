@@ -22,5 +22,4 @@ public final class VUserPrivilegeAO extends VUserPrivilege implements Serializab
      * 默认的序列化 id.
      */
     private static final long serialVersionUID = 1L;
-
 }

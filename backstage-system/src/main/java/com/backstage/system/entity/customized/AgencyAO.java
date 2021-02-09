@@ -1,7 +1,8 @@
 package com.backstage.system.entity.customized;
 
 import com.backstage.system.entity.gen.Agency;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
@@ -17,7 +18,6 @@ import java.io.Serializable;
  * @version 1.0.0, Nov 11, 2019
  */
 @JsonSerialize(include = Inclusion.ALWAYS)
-@Data
 public final class AgencyAO extends Agency implements Serializable {
 
     /**
@@ -28,5 +28,7 @@ public final class AgencyAO extends Agency implements Serializable {
     /**
      * 父类名称
      */
+    @Getter
+    @Setter
     private String parentName;
 }
