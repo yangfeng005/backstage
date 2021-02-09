@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @ComponentScan(basePackages = {"com.backstage.*"})
-@MapperScan({"com.backstage.*.dao"})
+@MapperScan({"com.backstage.**.dao"})
 @EnableTransactionManagement
 @SpringBootApplication
 public class Application {

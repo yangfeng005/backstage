@@ -22,16 +22,16 @@ import java.util.Map;
  * @author yangfeng
  * @Date 2019-09-17
  */
-@ConfigurationProperties(prefix = "jwt")
 @Component
+@ConfigurationProperties(prefix = "jwt")
 public class JWTUtil {
     private static Logger LOG = LoggerFactory.getLogger(JWTUtil.class);
+
     //过期时间
-    private static Long expireTime;
+    private static Long expire;
 
     // 秘钥
     private static String secret;
-
 
     /**
      * 校验token是否正确
@@ -56,6 +56,7 @@ public class JWTUtil {
 
     /**
      * 获得token中的信息无需secret解密也能获得
+     *
      * @param token
      * @param fieldName
      * @return
@@ -78,7 +79,7 @@ public class JWTUtil {
      */
     public static String sign(Map<String, Object> fields) {
         try {
-            Date date = new Date(System.currentTimeMillis() + expireTime * 1000);
+            Date date = new Date(System.currentTimeMillis() + expire * 1000);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTCreator.Builder builder = JWT.create();
             for (Map.Entry entry : fields.entrySet()) {
@@ -88,22 +89,21 @@ public class JWTUtil {
         } catch (Exception e) {
             return null;
         }
-
     }
 
-    public static Long getExpireTime() {
-        return expireTime;
+    public static Long getExpire() {
+        return expire;
     }
 
-    public static void setExpireTime(Long expireTime) {
-        JWTUtil.expireTime = expireTime;
+    public void setExpire(Long expire) {
+        JWTUtil.expire = expire;
     }
 
     public static String getSecret() {
         return secret;
     }
 
-    public static void setSecret(String secret) {
+    public void setSecret(String secret) {
         JWTUtil.secret = secret;
     }
 }
