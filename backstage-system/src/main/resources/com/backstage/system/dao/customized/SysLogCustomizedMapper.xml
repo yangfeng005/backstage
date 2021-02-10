@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Description: A generated data access implementation of entity SysLog.
+                 Generated at 2019-09-16 16:06:26, do NOT modify!
+    Author: <a href="mailto:DL88250@gmail.com">Liang Ding</a>
+    Version: 1.0.0.0, Sep 16, 2019
+
+-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.backstage.system.dao.customized.SysLogCustomizedMapper">
+    <resultMap id="CustomResultMap" type="com.backstage.system.entity.customized.SysLogAO">
+        <id column="ID" property="id" jdbcType="BIGINT"/>
+        <result column="USER" property="user" jdbcType="VARCHAR"/>
+        <result column="IP" property="ip" jdbcType="VARCHAR"/>
+        <result column="ACTION" property="action" jdbcType="VARCHAR"/>
+        <result column="OPERATE_OBJECT" property="operateObject" jdbcType="VARCHAR"/>
+        <result column="OPERATE_CONTENT" property="operateContent" jdbcType="VARCHAR"/>
+        <result column="OPERATE_TIME" property="operateTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="listByCondition" resultMap="CustomResultMap"
+            parameterType="com.backstage.system.dto.request.SysLogRequest">
+        SELECT
+              ID, USER, IP, ACTION, OPERATE_OBJECT, OPERATE_CONTENT, OPERATE_TIME
+        FROM t_sys_log
+        <where>
+            <if test="userName != null and userName != ''">
+                USER = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="operateTime != null and operateTime != ''">
+                AND DATE_FORMAT(OPERATE_TIME, '%Y-%m-%d') = #{operateTime,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

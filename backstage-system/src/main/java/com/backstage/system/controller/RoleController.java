@@ -131,7 +131,7 @@ public class RoleController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roleId", value = "角色id", dataType = "String", paramType = "query", required = true),
     })
-    @PostMapping("/getRolePrivilege")
+    @GetMapping("/getRolePrivilege")
     @RequiresPermissions(value = {"roleManage:view", "roleManage:manage"}, logical = Logical.OR)
     @LogOperation(action = "获取角色权限")
     public Object getRolePrivilege(@RequestParam String roleId) {

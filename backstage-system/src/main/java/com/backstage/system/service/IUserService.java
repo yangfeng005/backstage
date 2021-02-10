@@ -97,4 +97,12 @@ public interface IUserService extends IBaseAOService<UserAO, UserCriteria> {
      * @return
      */
     ServiceResult<Integer> resetPwd(String userName);
+
+
+    /**
+     * 根据用户名查询用户相关信息，包括角色权限
+     *
+     * @return
+     */
+    ServiceResult<UserAO> getByUserName(String userName);
 }

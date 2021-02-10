@@ -157,7 +157,7 @@ public class LoginController {
     @ApiOperation(value = "退出", notes = "退出")
     @ApiImplicitParams({
     })
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     @LogOperation(action = "退出登录")
     public Object logout(HttpServletRequest request, HttpServletResponse response) {
         Subject currentUser = SecurityUtils.getSubject();

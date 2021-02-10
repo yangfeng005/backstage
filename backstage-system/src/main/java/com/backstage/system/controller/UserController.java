@@ -116,6 +116,7 @@ public class UserController {
     public Object saveUserRole(@RequestParam String userId, String[] roleIds) {
         return userService.saveUserRole(userId, roleIds);
     }
+
     /**
      * 修改账号密码
      *
@@ -170,6 +171,23 @@ public class UserController {
     @LogOperation(action = "根据id查询用户")
     public Object getUserById(@RequestParam String id) {
         return userService.getUserById(id);
+    }
+
+
+    /**
+     * 根据用户名查询用户相关信息
+     *
+     * @param userName
+     * @return
+     */
+    @ApiOperation(value = "根据用户名查询用户相关信息", notes = "根据用户名查询用户相关信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", required = true),
+    })
+    @PostMapping("/getByUserName")
+    @LogOperation(action = "根据用户名查询用户相关信息")
+    public Object getByUserName(@RequestParam String userName) {
+        return userService.getByUserName(userName);
     }
 
 }

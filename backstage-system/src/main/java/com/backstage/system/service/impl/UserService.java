@@ -14,11 +14,14 @@ import com.backstage.system.dao.customized.UserCustomizedMapper;
 import com.backstage.system.dao.gen.UserGeneratedMapper;
 import com.backstage.system.dao.gen.UserRoleGeneratedMapper;
 import com.backstage.system.dto.request.UserRequest;
+import com.backstage.system.entity.customized.RoleAO;
 import com.backstage.system.entity.customized.UserAO;
 import com.backstage.system.entity.customized.UserRoleAO;
 import com.backstage.system.entity.gen.UserCriteria;
+import com.backstage.system.service.IRoleService;
 import com.backstage.system.service.IUserRoleService;
 import com.backstage.system.service.IUserService;
+import com.backstage.system.service.IVUserPrivilegeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -52,6 +55,12 @@ public class UserService extends AbstractBaseAOService<UserAO, UserCriteria> imp
 
     @Resource
     private IUserRoleService userRoleService;
+
+    @Resource
+    private IVUserPrivilegeService vUserPrivilegeService;
+
+    @Resource
+    private IRoleService roleService;
 
 
     @Override
@@ -283,5 +292,24 @@ public class UserService extends AbstractBaseAOService<UserAO, UserCriteria> imp
     @Override
     public ServiceResult<Integer> resetPwd(String userName) {
         return updatePwd(userName, Constant.USER_CS_PWD);
+    }
+
+
+    /**
+     * 根据用户名查询用户相关信息，包括角色权限
+     *
+     * @return
+     */
+    @Override
+    public ServiceResult<UserAO> getByUserName(String userName) {
+        UserAO user = getUserByName(userName);
+        if (user != null) {
+            user.setPrivileges(vUserPrivilegeService.queryPrivilegeByUserName(userName));
+            ServiceResult<List<RoleAO>> roleResult = roleService.getRolesByUserName(userName);
+            if (roleResult != null && roleResult.isSucceed() && !CollectionUtils.isEmpty(roleResult.getData())) {
+                user.setRoles(roleResult.getData());
+            }
+        }
+        return ServiceResultHelper.genResultWithSuccess(user);
     }
 }
