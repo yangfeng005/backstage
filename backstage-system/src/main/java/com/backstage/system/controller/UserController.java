@@ -1,5 +1,6 @@
 package com.backstage.system.controller;
 
+import com.backstage.system.auth.AuthUtil;
 import com.backstage.system.dto.request.UserRequest;
 import com.backstage.system.entity.customized.UserAO;
 import com.backstage.system.log.LogOperation;
@@ -134,9 +135,9 @@ public class UserController {
     @PostMapping("/updatePwd")
     @RequiresPermissions("userManage:manage")
     @LogOperation(action = "修改账号密码")
-    public Object updatePwd(@RequestParam String userName, @RequestParam String originPassword,
+    public Object updatePwd(@RequestParam String originPassword,
                             @RequestParam String newPassword) {
-        return userService.updatePwd(userName, originPassword, newPassword);
+        return userService.updatePwd(AuthUtil.getCurrentUser().getUserName(), originPassword, newPassword);
     }
 
     /**
@@ -149,7 +150,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String", paramType = "query", required = true),
     })
-    @GetMapping("/resetPwd")
+    @PostMapping("/resetPwd")
     @RequiresPermissions("userManage:manage")
     @LogOperation(action = "重置密码")
     public Object resetPwd(@RequestParam String userName) {
