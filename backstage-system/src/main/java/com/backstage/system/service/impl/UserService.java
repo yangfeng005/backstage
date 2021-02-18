@@ -290,7 +290,10 @@ public class UserService extends AbstractBaseAOService<UserAO, UserCriteria> imp
      * @return
      */
     @Override
-    public ServiceResult<Integer> resetPwd(String userName) {
+    public ServiceResult<Integer> resetPwd(String userName, String newPassword) {
+        if (StringUtils.isNotBlank(newPassword)) {
+            return updatePwd(userName, newPassword);
+        }
         return updatePwd(userName, Constant.USER_CS_PWD);
     }
 

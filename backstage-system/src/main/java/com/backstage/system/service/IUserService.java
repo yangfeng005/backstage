@@ -96,7 +96,7 @@ public interface IUserService extends IBaseAOService<UserAO, UserCriteria> {
      *
      * @return
      */
-    ServiceResult<Integer> resetPwd(String userName);
+    ServiceResult<Integer> resetPwd(String userName, String newPassword);
 
 
     /**

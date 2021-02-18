@@ -153,8 +153,8 @@ public class UserController {
     @PostMapping("/resetPwd")
     @RequiresPermissions("userManage:manage")
     @LogOperation(action = "重置密码")
-    public Object resetPwd(@RequestParam String userName) {
-        return userService.resetPwd(userName);
+    public Object resetPwd(@RequestParam String userName, String newPassword) {
+        return userService.resetPwd(userName, newPassword);
     }
 
     /**
