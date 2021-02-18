@@ -57,6 +57,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Object handleException(Exception e, HttpServletRequest request, HttpServletResponse response) {
         LOG.error(e.getMessage(), e);
+        LOG.error(request.getRequestURI());
         return ServiceResultHelper.genResult(false,
                 Constant.ErrorCode.SERVER_ERROR_CODE, Constant.ErrorCode.SERVER_ERROR_MSG, null);
     }
