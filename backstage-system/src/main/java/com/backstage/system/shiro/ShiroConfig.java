@@ -66,6 +66,7 @@ public class ShiroConfig {
         filterRuleMap.put("/pc/login/logout", "anon");
         filterRuleMap.put("/pc/login/noLogin", "anon");
         filterRuleMap.put("/file/downloadFile", "anon");
+        filterRuleMap.put("/api/**", "anon");
         filterRuleMap.put("/**", "authc");
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
