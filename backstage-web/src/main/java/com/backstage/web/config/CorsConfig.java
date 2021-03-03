@@ -1,4 +1,4 @@
-package com.backstage.core.config;
+package com.backstage.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

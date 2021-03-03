@@ -1,4 +1,4 @@
-package com.backstage.core.config;
+package com.backstage.web.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
